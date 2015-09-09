@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "description": "http request",
   "main": "http-request.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "keywords": [
     "http",
     "get",
     "post"
   ],
-  "author": "superpaintman",
+  "author": {
+    "name": "superpaintman",
+    "email": "superpaintmandeveloper@gmail.com"
+  },
   "license": "ISC"
 }

@@ -1,7 +1,6 @@
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
-var async = require('async');
 
 var httpRequest = (function() {
     /**
