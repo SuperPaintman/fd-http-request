@@ -13,5 +13,9 @@
     "name": "superpaintman",
     "email": "superpaintmandeveloper@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperPaintman/fd-http-request.git"
+  },
   "license": "ISC"
 }
