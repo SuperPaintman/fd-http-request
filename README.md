@@ -65,7 +65,7 @@ var request = new Request({
 });
 
 request.get('https://api.vk.com/method/users.get', function( res ) {
-    // console.log( res );
+    console.log( res );
     /* RESPONSE:
         {
             status: 200,
@@ -166,44 +166,44 @@ request.get('https://api.vk.com/method/users.get', function( res ) {
     * `boolean` saveCookies - whether to save response cookies. _default: `true`_
     * `object` headers - permanent headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
 
-#### get(url, callback, opts)
+#### Request# get(url, callback, opts)
 Full copy of the [ `get` ]( #get-url-callback-opts ) method. If set `opts.saveCookies` merge and save `opts.cookies` and merge `opts.headers`, if they set.
 
-#### post(url, callback, opts)
+#### Request# post(url, callback, opts)
 Full copy of the [ `post` ]( #post-url-callback-opts ) method. If set `opts.saveCookies` merge and save `opts.cookies` and merge `opts.headers`, if they set.
 
-#### header()
+#### Request# header()
 **Returns current permanent headers**
 * return `object` - permanent headers
 
-#### header( headers )
+#### Request# header( headers )
 **Updates permanent headers**
 * `object` headers - add new or change current permanent headers. _example: `{'User-Agent': 'Mozilla/5.0'}`_
 * return `object` - current permanent headers
 
-#### clearHeader()
+#### Request# clearHeader()
 **Removes all permanent headers**
 * return `object` - current permanent headers
 
-#### clearHeader( name )
+#### Request# clearHeader( name )
 **Removes permanent header**
 * `string` name - the name of removed header. _example: `'User-Agent'`_
 * return `object` - current permanent headers
 
-#### cookie()
+#### Request# cookie()
 **Returns saved cookies**
 * return `object` - saved cookies
 
-#### cookie( cookies )
+#### Request# cookie( cookies )
 **Updates saved cookies**
 * `object` cookies - add new or change saved cookies. _example: `{foo: 'bar'}`_
 * return `object` - current saved cookies
 
-#### clearCookie()
+#### Request# clearCookie()
 **Removes all saved cookies**
 * return `object` - current saved cookies
 
-#### clearHeader( name )
+#### Request# clearCookie( name )
 **Removes saved cookie**
 * `string` name - the name of removed cookie. _example: `'foo'`_
 * return `object` - current saved cookies
