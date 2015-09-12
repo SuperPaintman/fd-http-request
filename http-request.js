@@ -4,6 +4,7 @@ var url = require('url');
 var querystring = require('querystring');
 
 var objectMerge = require('object-merge');
+var cookieParser = require('cookie');
 
 var request = (function() {
     function _request(method, siteurl, callback, opts){
@@ -11,6 +12,7 @@ var request = (function() {
         opts            = opts          || {};
         opts.data       = opts.data     || null;
         opts.headers    = opts.headers  || null;
+        opts.cookies    = opts.cookies  || null;
         opts.encode     = opts.encode   || 'utf8';
 
         var queryData = querystring.stringify( opts.data );
@@ -49,6 +51,27 @@ var request = (function() {
             });
         }
 
+        // Cookie заголовков с запросом
+        if( opts.cookies ){
+            var cookies = '';
+            var step = 0;
+            for( key in opts.cookies ){
+                if(step > 0)
+                    cookies += '; '
+                var val = opts.cookies[ key ];
+
+                // cookies += cookieParser.serialize( key, decodeURIComponent(val) ); //TODO: не всегда cookie поступают в encode виде
+                cookies += key+'='+val;
+                step++;
+            }
+
+            options = objectMerge(options, {
+                headers: { 
+                    'Cookie': cookies
+                }
+            });
+        }
+
         // Установка протокола
         if( (parsedUrl.protocol == 'https:' && !opts.protocol) || opts.protocol == 'https'){
             options.port = 443;
@@ -60,13 +83,26 @@ var request = (function() {
 
         var req = _http.request(options, function(res) {
             var data = '';
+            var status = res.statusCode;
+            var headers = res.headers;
+            var cookies = [];
+
+            for( var key in res.headers['set-cookie'] ){
+                var cookie = cookieParser.parse( res.headers['set-cookie'][ key ] );
+                cookies.push(cookie);
+            }
 
             res.setEncoding( opts.encode );
             res.on('data', function (chunk) {
                 data += chunk;
             });
             res.on('end', function () {
-                callback( data );
+                callback({
+                    status: status,
+                    data: data, 
+                    headers: headers,
+                    cookies: cookies
+                });
             });
         });
 
@@ -85,6 +121,7 @@ var request = (function() {
      * @param  {Object}   opts              - Опции
      * @param  {Object}   opts.data         - POST параметры
      * @param  {Object}   opts.headers      - Заголовки
+     * @param  {Object}   opts.cookies      - Cookies
      * @param  {String}   opts.encode       - Кодировка ответа
      * @param  {String}   opts.protocol     - Протокол запроса ['http'|'https']
      */
@@ -99,6 +136,7 @@ var request = (function() {
      * @param  {Object}   opts              - Опции
      * @param  {Object}   opts.data         - GET параметры
      * @param  {Object}   opts.headers      - Заголовки
+     * @param  {Object}   opts.cookies      - Cookies
      * @param  {String}   opts.encode       - Кодировка ответа
      * @param  {String}   opts.protocol     - Протокол запроса ['http'|'https']
      */

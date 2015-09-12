@@ -10,20 +10,34 @@ npm install fd-http-request --save
 var httpRequest = require('fd-http-request');
 
 // Get request
-httpRequest.get('https://api.vk.com/method/users.get', function(data){
-    console.log( data );
+httpRequest.get('https://api.vk.com/method/users.get', function(res){
+    console.log( res );
     /* RESPONSE:
-        response: [{
-            id: 205387401,
-            first_name: 'Tom',
-            last_name: 'Cruise',
-            city: {
-                id: 5331,
-                title: 'Los Angeles'
+        {
+            status: 200,
+            data: '{"response":[{"uid":205387401,"first_name":"Tom","last_name":"Cruise","city":5331,"photo_50":"http:\/\/cs402330.vk.me\/v402330401\/9760\/pV6sZ5wRGxE.jpg","verified":0}]}',
+            headers: {
+                server: 'Apache',
+                date: 'Sat, 12 Sep 2015 02:13:31 GMT',
+                'content-type': 'application/json; charset=utf-8',
+                'content-length': 169,
+                connection: 'close',
+                'x-powered-by': 'PHP/3.17046',
+                'set-cookie':[
+                    'remixlang=0; expires=Sun, 18 Sep 2016 03:04:05 GMT; path=/; domain=.vk.com'
+                ],
+                pragma: 'no-cache',
+                'cache-control': 'no-store'
             },
-            photo_50: 'https://pp.vk.me/...760/pV6sZ5wRGxE.jpg',
-            verified: 1
-        }]
+            cookies: [
+                {
+                    remixlang: 0,
+                    expires: 'Sun, 18 Sep 2016 03:04:05 GMT',
+                    path: '/',
+                    domain: '.vk.com'
+                }
+            ]
+        }
     */
 }, {
     encode: 'utf8',
@@ -39,25 +53,40 @@ httpRequest.get('https://api.vk.com/method/users.get', function(data){
 ## Methods
 ### get(url, callback, opts)
 * `string` url - the requested address
-* `callback` callback - **function(data)** callback function after a request
-    * `string` data - response from server
+* `callback` callback - **function(res)** callback function after a request
+    * `object` res - response from server
+        * `integer` status - response status
+        * `string` data - response text from server
+        * `object` headers - response headers
+        * `array` cookies - response cookies
 * `object` opts - request options **[optional]**
-    * `object` data - GET data. _default: `null`_
-    * `object` headers - request headers. _default: `null`_
-    * `string` encode - response encoding. _default: `utf8`_
+    * `object` data - GET data. _default: `null`_ . _example: `{user_ids: 205387401}`_
+    * `object` headers - request headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
+    * `object` cookies - request cookies. _default: `null`_ . _example: `{foo: 'bar'}`_
+    * `string` encode - response encoding. _default: `utf8`_ .
     * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
 ### post(url, callback, opts)
 * `string` url - the requested address
-* `callback` callback - **function(data)** callback function after a request
-    * `string` data - response from server
+* `callback` callback - **function(res)** callback function after a request
+    * `object` res - response from server
+        * `integer` status - response status
+        * `string` data - response text from server
+        * `object` headers - response headers
+        * `array` cookies - response cookies
 * `object` opts - request options **[optional]**
-    * `object` data - POST data. _default: `null`_
-    * `object` headers - request headers. _default: `null`_
-    * `string` encode - response encoding. _default: `utf8`_
+    * `object` data - POST data. _default: `null`_ . _example: `{user_ids: 205387401}`_
+    * `object` headers - request headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
+    * `object` cookies - request cookies. _default: `null`_ . _example: `{foo: 'bar'}`_
+    * `string` encode - response encoding. _default: `utf8`_ .
     * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
 ## Changelog
+### 0.4.0
+* `Add` - dependence on the [cookie](https://www.npmjs.com/package/cookie)
+* `Add` - custom cookie `opts.cookies`
+* `Change` - callback function. Now it called with `object` res parameter
+
 ### 0.3.0
 * `Add` - dependence on the [object-merge](https://www.npmjs.com/package/object-merge)
 * `Add` - custom headers `opts.headers`

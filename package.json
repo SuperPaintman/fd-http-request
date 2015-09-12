@@ -1,6 +1,6 @@
 {
   "name": "fd-http-request",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "http request",
   "main": "http-request.js",
   "scripts": {},
@@ -20,6 +20,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "cookie": "^0.2.0",
     "object-merge": "^2.5.1"
   }
 }
