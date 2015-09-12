@@ -45,7 +45,7 @@ httpRequest.get('https://api.vk.com/method/users.get', {
     * `string` encode - response encoding. _default: `utf8`_
     * `string` protocol - request protocol. _`http` or `https`_
 
-### post(url, args, callback, encode)
+### post(url, args, callback, opts)
 * `string` url - the requested address
 * `object | null` args - POST data
 * `callback` callback - **function(data)** callback function after a request
