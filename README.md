@@ -45,7 +45,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(data){
     * `object` data - GET data. _default: `null`_
     * `object` headers - request headers. _default: `null`_
     * `string` encode - response encoding. _default: `utf8`_
-    * `string` protocol - request protocol ._default: `autodetect from the protocol`_. [_`'http'` or `'https'`_]
+    * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
 ### post(url, callback, opts)
 * `string` url - the requested address
@@ -55,7 +55,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(data){
     * `object` data - POST data. _default: `null`_
     * `object` headers - request headers. _default: `null`_
     * `string` encode - response encoding. _default: `utf8`_
-    * `string` protocol - request protocol ._default: `autodetect from the protocol`_. [_`'http'` or `'https'`_]
+    * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
 ## Changelog
 ### 0.3.0
