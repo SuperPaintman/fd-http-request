@@ -59,6 +59,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
         * `string` data - response text from server
         * `object` headers - response headers
         * `array` cookies - response cookies
+        * `string` charset - response charset
 * `object` opts - request options **[optional]**
     * `object` data - GET data. _default: `null`_ . _example: `{user_ids: 205387401}`_
     * `object` headers - request headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
@@ -74,6 +75,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
         * `string` data - response text from server
         * `object` headers - response headers
         * `array` cookies - response cookies
+        * `string` charset - response charset
 * `object` opts - request options **[optional]**
     * `object` data - POST data. _default: `null`_ . _example: `{user_ids: 205387401}`_
     * `object` headers - request headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
@@ -85,6 +87,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
 ### 0.5.0
 * `Add` - dependence on the [iconv-lite](https://www.npmjs.com/package/iconv-lite)
 * `Add` - autodetect body charset from header `content-type` and convert it
+* `Add` - response charset argument `res.charset` to the callback
 * `Change` - rename `opts.encode` to `opts.charset`
 
 ### 0.4.0

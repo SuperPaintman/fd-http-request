@@ -2,8 +2,8 @@ var http = require('http');
 var https = require('https');
 var url = require('url');
 var querystring = require('querystring');
-var iconv = require('iconv-lite');
 
+var iconv = require('iconv-lite');
 var objectMerge = require('object-merge');
 var cookieParser = require('cookie');
 
