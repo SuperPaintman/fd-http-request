@@ -36,7 +36,8 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
                     path: '/',
                     domain: '.vk.com'
                 }
-            ]
+            ],
+            charset: 'utf-8'
         }
     */
 }, {
