@@ -40,7 +40,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
         }
     */
 }, {
-    encode: 'utf8',
+    charset: 'utf-8',
     protocol: 'https',
     data: {
         user_ids: 205387401,
@@ -63,7 +63,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
     * `object` data - GET data. _default: `null`_ . _example: `{user_ids: 205387401}`_
     * `object` headers - request headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
     * `object` cookies - request cookies. _default: `null`_ . _example: `{foo: 'bar'}`_
-    * `string` encode - response encoding. _default: `utf8`_ .
+    * `string` charset - response encoding. _default: `autodetect from the header`_ . _example: `'cp1251'`_
     * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
 ### post(url, callback, opts)
@@ -78,10 +78,15 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
     * `object` data - POST data. _default: `null`_ . _example: `{user_ids: 205387401}`_
     * `object` headers - request headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
     * `object` cookies - request cookies. _default: `null`_ . _example: `{foo: 'bar'}`_
-    * `string` encode - response encoding. _default: `utf8`_ .
+    * `string` charset - response encoding. _default: `autodetect from the header`_ . _example: `'cp1251'`_
     * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
 ## Changelog
+### 0.5.0
+* `Add` - dependence on the [iconv-lite](https://www.npmjs.com/package/iconv-lite)
+* `Add` - autodetect body charset from header `content-type` and convert it
+* `Change` - rename `opts.encode` to `opts.charset`
+
 ### 0.4.0
 * `Add` - dependence on the [cookie](https://www.npmjs.com/package/cookie)
 * `Add` - custom cookie `opts.cookies`

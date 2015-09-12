@@ -2,6 +2,7 @@ var http = require('http');
 var https = require('https');
 var url = require('url');
 var querystring = require('querystring');
+var iconv = require('iconv-lite');
 
 var objectMerge = require('object-merge');
 var cookieParser = require('cookie');
@@ -13,7 +14,7 @@ var request = (function() {
         opts.data       = opts.data     || null;
         opts.headers    = opts.headers  || null;
         opts.cookies    = opts.cookies  || null;
-        opts.encode     = opts.encode   || 'utf8';
+        opts.charset    = opts.charset  || null;
 
         var queryData = querystring.stringify( opts.data );
         var parsedUrl = url.parse( siteurl );
@@ -31,6 +32,7 @@ var request = (function() {
             hostname: host,
             path: path,
             method: method.toUpperCase(),
+            encoding: 'binary'
         };
 
         // Добавление заголовков POST
@@ -92,16 +94,33 @@ var request = (function() {
                 cookies.push(cookie);
             }
 
-            res.setEncoding( opts.encode );
+            res.setEncoding( 'binary' );
             res.on('data', function (chunk) {
                 data += chunk;
             });
             res.on('end', function () {
+                // Проверка кодировки
+                var charset = opts.charset;
+                var contentType = headers['content-type'];
+                if(contentType && !charset){
+                    var reg = /charset=([a-zA-Z0-9\-]+)(?:;|$|\ )/;
+                    var mathes = contentType.match(reg);
+                    if(mathes)
+                        charset = mathes[1];
+                }
+
+                data = new Buffer(data, 'binary');
+                if(charset)
+                    data = iconv.decode(data, charset).toString();
+                else
+                    data = data.toString();
+
                 callback({
                     status: status,
                     data: data, 
                     headers: headers,
-                    cookies: cookies
+                    cookies: cookies,
+                    charset: charset
                 });
             });
         });
@@ -122,7 +141,7 @@ var request = (function() {
      * @param  {Object}   opts.data         - POST параметры
      * @param  {Object}   opts.headers      - Заголовки
      * @param  {Object}   opts.cookies      - Cookies
-     * @param  {String}   opts.encode       - Кодировка ответа
+     * @param  {String}   opts.charset      - Кодировка ответа
      * @param  {String}   opts.protocol     - Протокол запроса ['http'|'https']
      */
     function post(siteurl, callback, opts) {
@@ -137,7 +156,7 @@ var request = (function() {
      * @param  {Object}   opts.data         - GET параметры
      * @param  {Object}   opts.headers      - Заголовки
      * @param  {Object}   opts.cookies      - Cookies
-     * @param  {String}   opts.encode       - Кодировка ответа
+     * @param  {String}   opts.charset      - Кодировка ответа
      * @param  {String}   opts.protocol     - Протокол запроса ['http'|'https']
      */
     function get(siteurl, callback, opts) {
