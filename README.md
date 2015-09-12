@@ -5,7 +5,7 @@
 npm install fd-http-request --save
 ```
 
-## Usage Example (VK.com API)
+## Usage Example | method GET (VK.com API)
 ```js
 var httpRequest = require('fd-http-request');
 
@@ -37,6 +37,9 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
                     domain: '.vk.com'
                 }
             ],
+            parsedCookies: {
+                remixlang: 0
+            },
             charset: 'utf-8'
         }
     */
@@ -51,8 +54,74 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
 });
 ```
 
+## Usage Example | Request class (VK.com API)
+```js
+var Request = require('fd-http-request').Request;
+var request = new Request({
+    saveCookies: true,
+    headers: {
+        'x-message': 'hi, mom!'
+    }
+});
+
+request.get('https://api.vk.com/method/users.get', function( res ) {
+    // console.log( res );
+    /* RESPONSE:
+        {
+            status: 200,
+            ...
+        }
+    */
+    
+    console.log( request.cookie() );
+    /* SAVED COOKIES:
+        {
+            remixlang: '0',
+            ...
+            domain: '.vk.com'
+        }
+    */
+    
+    console.log( request.header({
+        'x-studio': 'FlatDev'
+    }) );
+    /* PERMANENT HEADERS:
+        {
+            'x-message': 'hi, mom!',
+            'x-studio': 'FlatDev'
+        }
+    */
+    
+    console.log( request.header({
+        'x-message': 'hi, son!'
+    }) );
+    /* PERMANENT HEADERS:
+        {
+            'x-message': 'hi, son!',
+            'x-studio': 'FlatDev'
+        }
+    */
+    
+    console.log( request.clearHeader('x-message') );
+    /* PERMANENT HEADERS:
+        {
+            'x-studio': 'FlatDev'
+        }
+    */
+}, {
+    data: {
+        user_ids: 205387401,
+        fields: 'photo_50,city,verified',
+        version: 5.37
+    }
+});
+```
+
+------------------------------------
+
 ## Methods
 ### get(url, callback, opts)
+**Makes a GET request**
 * `string` url - the requested address
 * `callback` callback - **function(res)** callback function after a request
     * `object` res - response from server
@@ -60,6 +129,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
         * `string` data - response text from server
         * `object` headers - response headers
         * `array` cookies - response cookies
+        * `object` parsedCookies - parsed response cookies. Valid for the request
         * `string` charset - response charset
 * `object` opts - request options **[optional]**
     * `object` data - GET data. _default: `null`_ . _example: `{user_ids: 205387401}`_
@@ -68,13 +138,17 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
     * `string` charset - response encoding. _default: `autodetect from the header`_ . _example: `'cp1251'`_
     * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
+------------------------------------
+
 ### post(url, callback, opts)
+**Makes a POST request**
 * `string` url - the requested address
 * `callback` callback - **function(res)** callback function after a request
     * `object` res - response from server
         * `integer` status - response status
         * `string` data - response text from server
         * `object` headers - response headers
+        * `object` parsedCookies - parsed response cookies. Valid for the request
         * `array` cookies - response cookies
         * `string` charset - response charset
 * `object` opts - request options **[optional]**
@@ -84,7 +158,63 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
     * `string` charset - response encoding. _default: `autodetect from the header`_ . _example: `'cp1251'`_
     * `string` protocol - request protocol . _default: `autodetect from the protocol`_ . [ _`'http'` or `'https'`_ ]
 
+------------------------------------
+
+## Classes
+### Request(opts)
+* `object` opts - class options
+    * `boolean` saveCookies - whether to save response cookies. _default: `true`_
+    * `object` headers - permanent headers. _default: `null`_ . _example: `{'User-Agent': 'Mozilla/5.0'}`_
+
+#### get(url, callback, opts)
+Full copy of the [ `get` ]( #get-url-callback-opts ) method. If set `opts.saveCookies` merge and save `opts.cookies` and merge `opts.headers`, if they set.
+
+#### post(url, callback, opts)
+Full copy of the [ `post` ]( #post-url-callback-opts ) method. If set `opts.saveCookies` merge and save `opts.cookies` and merge `opts.headers`, if they set.
+
+#### header()
+**Returns current permanent headers**
+* return `object` - permanent headers
+
+#### header( headers )
+**Updates permanent headers**
+* `object` headers - add new or change current permanent headers. _example: `{'User-Agent': 'Mozilla/5.0'}`_
+* return `object` - current permanent headers
+
+#### clearHeader()
+**Removes all permanent headers**
+* return `object` - current permanent headers
+
+#### clearHeader( name )
+**Removes permanent header**
+* `string` name - the name of removed header. _example: `'User-Agent'`_
+* return `object` - current permanent headers
+
+#### cookie()
+**Returns saved cookies**
+* return `object` - saved cookies
+
+#### cookie( cookies )
+**Updates saved cookies**
+* `object` cookies - add new or change saved cookies. _example: `{foo: 'bar'}`_
+* return `object` - current saved cookies
+
+#### clearCookie()
+**Removes all saved cookies**
+* return `object` - current saved cookies
+
+#### clearHeader( name )
+**Removes saved cookie**
+* `string` name - the name of removed cookie. _example: `'foo'`_
+* return `object` - current saved cookies
+
+------------------------------------
+
 ## Changelog
+### 1.1.0
+* `Add` - response parsed cookies `res.parsedCookies` to the callback. It is valid сookies for the request in `opts.cookies`
+* `Add` - method [ `Request` ](#Request) returns class **Request(opts)** . It intelligent class based on `post` and `get` methods. It can _set permanent headers_, _save response cookies_, _get current cookies and headers_ and more.
+
 ### 0.5.0
 * `Add` - dependence on the [iconv-lite](https://www.npmjs.com/package/iconv-lite)
 * `Add` - autodetect body charset from header `content-type` and convert it
