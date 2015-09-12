@@ -10,11 +10,7 @@ npm install fd-http-request --save
 var httpRequest = require('fd-http-request');
 
 // Get request
-httpRequest.get('https://api.vk.com/method/users.get', {
-    user_ids: 205387401,
-    fields: 'photo_50,city,verified',
-    version: 5.37
-}, function(data){
+httpRequest.get('https://api.vk.com/method/users.get', function(data){
     console.log( data );
     /* RESPONSE:
         response: [{
@@ -31,30 +27,43 @@ httpRequest.get('https://api.vk.com/method/users.get', {
     */
 }, {
     encode: 'utf8',
-    protocol: 'https'
+    protocol: 'https',
+    data: {
+        user_ids: 205387401,
+        fields: 'photo_50,city,verified',
+        version: 5.37
+    }
 });
 ```
 
 ## Methods
-### get(url, args, callback, opts)
+### get(url, callback, opts)
 * `string` url - the requested address
-* `object | null` args - GET data
-* `callback` callback - **function(data)** callback function after a request.
-    * `string` data - response from server
-* `object` opts - request options **[optional]**
-    * `string` encode - response encoding. _default: `utf8`_
-    * `string` protocol - request protocol. _`http` or `https`_
-
-### post(url, args, callback, opts)
-* `string` url - the requested address
-* `object | null` args - POST data
 * `callback` callback - **function(data)** callback function after a request
     * `string` data - response from server
 * `object` opts - request options **[optional]**
+    * `object` data - GET data. _default: `null`_
+    * `object` headers - request headers. _default: `null`_
     * `string` encode - response encoding. _default: `utf8`_
-    * `string` protocol - request protocol. _`http` or `https`_
+    * `string` protocol - request protocol ._default: `autodetect from the protocol`_. [_`'http'` or `'https'`_]
+
+### post(url, callback, opts)
+* `string` url - the requested address
+* `callback` callback - **function(data)** callback function after a request
+    * `string` data - response from server
+* `object` opts - request options **[optional]**
+    * `object` data - POST data. _default: `null`_
+    * `object` headers - request headers. _default: `null`_
+    * `string` encode - response encoding. _default: `utf8`_
+    * `string` protocol - request protocol ._default: `autodetect from the protocol`_. [_`'http'` or `'https'`_]
 
 ## Changelog
+### 0.3.0
+* `Add` - dependence on the [object-merge](https://www.npmjs.com/package/object-merge)
+* `Add` - custom headers `opts.headers`
+* `Change` - moved 2-nd `data` argument to `opts.data`
+* `Other` - make code less
+
 ### 0.2.0
-* Added autodetect protocol `http` or `https`
-* Changed 4-th argument from the `string` _encode_ to the `object` _opts_
+* `Add` - autodetect protocol `http` or `https`
+* `Change` - 4-th argument from the `string` _encode_ to the `object` _opts_
