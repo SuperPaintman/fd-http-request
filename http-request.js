@@ -1,23 +1,29 @@
 var http = require('http');
+var https = require('https');
 var url = require('url');
 var querystring = require('querystring');
 
-var httpRequest = (function() {
+var request = (function() {
     /**
      * Post запрос
-     * @param  {String}   siteurl   - Адрес запроса
-     * @param  {Object}   data      - POST параметры
-     * @param  {Function} callback  - Callback функция
-     * @param  {String}   encode    - Кодировка ответа
+     * @param  {String}   siteurl           - Адрес запроса
+     * @param  {Object}   data              - POST параметры
+     * @param  {Function} callback          - Callback функция
+     * @param  {Object}   opts              - Опции
+     * @param  {String}   opts.encode       - Кодировка ответа
+     * @param  {String}   opts.protocol     - Протокол запроса ['http'|'https']
      */
-    function post(siteurl, data, callback, encode) {
+    function post(siteurl, data, callback, opts) {
+        // Default
+        opts = opts || {};
+        opts.encode = opts.encode || 'utf8';
+
         var queryData = querystring.stringify( data );
 
         var parsedUrl = url.parse( siteurl );
 
         var options = {
             hostname: parsedUrl.host,
-            port: 80,
             path: parsedUrl.pathname,
             method: 'POST',
             headers: {
@@ -26,10 +32,18 @@ var httpRequest = (function() {
             }
         };
 
-        var req = http.request(options, function(res) {
+        if( (parsedUrl.protocol == 'https:' && !opts.protocol) || opts.protocol == 'https'){
+            options.port = 443;
+            var _http = https;
+        } else {
+            options.port = 80;
+            var _http = http;
+        }
+
+        var req = _http.request(options, function(res) {
             var data = '';
 
-            res.setEncoding( encode || 'utf8' );
+            res.setEncoding( opts.encode );
             res.on('data', function (chunk) {
                 data += chunk;
             });
@@ -43,13 +57,19 @@ var httpRequest = (function() {
     }
 
     /**
-     * Get запрос
-     * @param  {String}   siteurl   - Адрес запроса
-     * @param  {Object}   data      - POST параметры
-     * @param  {Function} callback  - Callback функция
-     * @param  {String}   encode    - Кодировка ответа
+     * Post запрос
+     * @param  {String}   siteurl           - Адрес запроса
+     * @param  {Object}   data              - POST параметры
+     * @param  {Function} callback          - Callback функция
+     * @param  {Object}   opts              - Опции
+     * @param  {String}   opts.encode       - Кодировка ответа
+     * @param  {String}   opts.protocol     - Протокол запроса ['http'|'https']
      */
-    function get(siteurl, data, callback, encode) {
+    function get(siteurl, data, callback, opts) {
+        // Default
+        opts = opts || {};
+        opts.encode = opts.encode || 'utf8';
+
         var parsedUrl = url.parse( siteurl );
 
         var path = parsedUrl.pathname;
@@ -61,15 +81,22 @@ var httpRequest = (function() {
 
         var options = {
             hostname: parsedUrl.host,
-            port: 80,
             path: path,
             method: 'GET'
         };
 
-        var req = http.request(options, function(res) {
+        if( (parsedUrl.protocol == 'https:' && !opts.protocol) || opts.protocol == 'https'){
+            options.port = 443;
+            var _http = https;
+        } else {
+            options.port = 80;
+            var _http = http;
+        }
+
+        var req = _http.request(options, function(res) {
             var data = '';
 
-            res.setEncoding( encode || 'utf8' );
+            res.setEncoding( opts.encode  );
             res.on('data', function (chunk) {
                 data += chunk;
             });
@@ -86,4 +113,4 @@ var httpRequest = (function() {
     }
 })();
 
-module.exports = httpRequest;
+module.exports = request;

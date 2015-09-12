@@ -29,20 +29,32 @@ httpRequest.get('https://api.vk.com/method/users.get', {
             verified: 1
         }]
     */
-}, 'utf8');
+}, {
+    encode: 'utf8',
+    protocol: 'https'
+});
 ```
 
 ## Methods
-### get(url, args, callback, encode)
+### get(url, args, callback, opts)
 * `string` url - the requested address
 * `object | null` args - GET data
 * `callback` callback - **function(data)** callback function after a request.
     * `string` data - response from server
-* `string` encode - response encoding. _default: `utf8`_
+* `object` opts - request options **[optional]**
+    * `string` encode - response encoding. _default: `utf8`_
+    * `string` protocol - request protocol. _`http` or `https`_
 
 ### post(url, args, callback, encode)
 * `string` url - the requested address
 * `object | null` args - POST data
 * `callback` callback - **function(data)** callback function after a request
     * `string` data - response from server
-* `string` encode - response encoding. _default: `utf8`_
+* `object` opts - request options **[optional]**
+    * `string` encode - response encoding. _default: `utf8`_
+    * `string` protocol - request protocol. _`http` or `https`_
+
+## Changelog
+### 0.2.0
+* Added autodetect protocol `http` or `https`
+* Changed 4-th argument from the `string` _encode_ to the `object` _opts_
