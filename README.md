@@ -85,7 +85,7 @@ httpRequest.get('https://api.vk.com/method/users.get', function(res){
 ### 0.4.0
 * `Add` - dependence on the [cookie](https://www.npmjs.com/package/cookie)
 * `Add` - custom cookie `opts.cookies`
-* `Change` - callback function. Now it called with `object` res parameter
+* `Change` - callback function. Now it called with `object` res argument
 
 ### 0.3.0
 * `Add` - dependence on the [object-merge](https://www.npmjs.com/package/object-merge)
