@@ -202,7 +202,7 @@ Full copy of the [ `post` ]( #post-url-callback-opts ) method. If set `opts.save
 #### Request# cookie( cookies, convert )
 **Make valid input cookies and updates saved cookies**
 * `object` cookies - add new or change saved cookies. _example: `{foo: 'bar'}`_
-* `boolean` convert - whether to convert cookies. if cookies look like `[{foo: 'bar'}, {doo: 'gar'}]` set it to `true`, if look like `{foo: 'bar', doo: 'gar'}` set it to `false`. _default: `false`_ 
+* `boolean` convert - whether to convert cookies. if cookies look like `[{foo: 'bar'}, {doo: 'gar'}]` set it to `false`, if look like `{foo: 'bar', doo: 'gar'}` set it to `true`. _default: `true`_ 
 * return `object` - current saved cookies
 
 #### Request# clearCookie()

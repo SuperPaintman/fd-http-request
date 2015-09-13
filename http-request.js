@@ -203,7 +203,7 @@ var request = (function() {
                 case 2:
                 case 1:
                     var cookies =  arguments[0] || null;
-                    var convert =  arguments[1] || false;
+                    var convert =  arguments[1] || true;
 
                     if ( convert ){
                         cookies = toResCookie( cookies );
