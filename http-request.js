@@ -192,6 +192,7 @@ var request = (function() {
          * @memberOf Request
          * @method cookie
          * @param {Array|Null} first    - Устанавливаемые cookie 
+         * @param {Boolean|Null} second - Конвертировать ли cookie
          * @return {Array}              - Текущие cookie
          */
         Request.prototype.cookie = function() {
@@ -199,8 +200,15 @@ var request = (function() {
 
             switch(arguments.length){
                 // Set
+                case 2:
                 case 1:
-                    var cookies = toResCookie( arguments[0] );
+                    var cookies =  arguments[0] || null;
+                    var convert =  arguments[1] || false;
+
+                    if ( convert ){
+                        cookies = toResCookie( cookies );
+                    }
+
                     if(self.cookies)
                         self.cookies = mergeResCookie( self.cookies, cookies );
                     else

@@ -199,6 +199,12 @@ Full copy of the [ `post` ]( #post-url-callback-opts ) method. If set `opts.save
 * `object` cookies - add new or change saved cookies. _example: `{foo: 'bar'}`_
 * return `object` - current saved cookies
 
+#### Request# cookie( cookies, convert )
+**Make valid input cookies and updates saved cookies**
+* `object` cookies - add new or change saved cookies. _example: `{foo: 'bar'}`_
+* `boolean` convert - whether to convert cookies. if cookies look like `[{foo: 'bar'}, {doo: 'gar'}]` set it to `true`, if look like `{foo: 'bar', doo: 'gar'}` set it to `false`. _default: `false`_ 
+* return `object` - current saved cookies
+
 #### Request# clearCookie()
 **Removes all saved cookies**
 * return `object` - current saved cookies
@@ -211,27 +217,30 @@ Full copy of the [ `post` ]( #post-url-callback-opts ) method. If set `opts.save
 ------------------------------------
 
 ## Changelog
-### 1.1.0
+### 1.1.1 [ Unstable ]
+* `Add` - second argument `convert` Request# cookie(). If it set, make valid first argument cookies for request style
+
+### 1.1.0 [ Unstable ]
 * `Add` - response parsed cookies `res.parsedCookies` to the callback. It is valid сookies for the request in `opts.cookies`
 * `Add` - method [ `Request` ](#Request) returns class **Request(opts)** . It intelligent class based on `post` and `get` methods. It can _set permanent headers_, _save response cookies_, _get current cookies and headers_ and more.
 
-### 0.5.0
+### 0.5.0 [ `Stable` ]
 * `Add` - dependence on the [iconv-lite](https://www.npmjs.com/package/iconv-lite)
 * `Add` - autodetect body charset from header `content-type` and convert it
 * `Add` - response charset argument `res.charset` to the callback
 * `Change` - rename `opts.encode` to `opts.charset`
 
-### 0.4.0
+### 0.4.0 [ Unstable ]
 * `Add` - dependence on the [cookie](https://www.npmjs.com/package/cookie)
 * `Add` - custom cookie `opts.cookies`
 * `Change` - callback function. Now it called with `object` res argument
 
-### 0.3.0
+### 0.3.0 [ Unstable ]
 * `Add` - dependence on the [object-merge](https://www.npmjs.com/package/object-merge)
 * `Add` - custom headers `opts.headers`
 * `Change` - moved 2-nd `data` argument to `opts.data`
 * `Other` - make code less
 
-### 0.2.0
+### 0.2.0 [ Unstable ]
 * `Add` - autodetect protocol `http` or `https`
 * `Change` - 4-th argument from the `string` _encode_ to the `object` _opts_
