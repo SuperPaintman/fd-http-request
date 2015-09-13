@@ -217,6 +217,10 @@ Full copy of the [ `post` ]( #post-url-callback-opts ) method. If set `opts.save
 ------------------------------------
 
 ## Changelog
+### 1.1.2 [ Unstable ]
+* `Change` - fixed stylistic errors that could lead to errors
+* `Bugfix` - second argument `convert` Request# cookie(). If it set, make valid first argument cookies for request style
+
 ### 1.1.1 [ Unstable ]
 * `Add` - second argument `convert` Request# cookie(). If it set, make valid first argument cookies for request style
 

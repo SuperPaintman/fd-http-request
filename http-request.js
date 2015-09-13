@@ -18,9 +18,9 @@ var request = (function() {
          * @param {object} opts.headers         - постоянные заголовки запроса
          */
         function Request(opts) {
-            this.cookies = null;
-            this.headers = opts.headers || null;
-            this.saveCookies = opts.saveCookies || true;
+            this.cookies        = null;
+            this.headers        = opts.headers      != undefined ? opts.headers     : null;
+            this.saveCookies    = opts.saveCookies  != undefined ? opts.saveCookies : true;
         }
 
         /**
@@ -32,8 +32,8 @@ var request = (function() {
         Request.prototype._request = function(method, siteurl, callback, opts) {
             var self = this;
             opts = opts || {};
-            opts.cookies = opts.cookies || null;
-            opts.headers = opts.headers || null;
+            opts.cookies = opts.cookies != undefined ? opts.cookies : null;
+            opts.headers = opts.headers != undefined ? opts.headers : null;
 
             if( opts.cookies ){
                 self.cookies = mergeResCookie( self.cookies, toResCookie( opts.cookies ) );
@@ -57,9 +57,9 @@ var request = (function() {
                 var reqCookies = {};
                 for (var i in self.cookies){
                     var cookie = self.cookies[i];
-                    var cookieHost = cookie.domain || undefined;
-                    var cookiePath = cookie.path || undefined;
-                    var cookieExpires = cookie.expires || undefined;
+                    var cookieHost      = cookie.domain    != undefined ? cookie.domain  : undefined;
+                    var cookiePath      = cookie.path      != undefined ? cookie.path    : undefined;
+                    var cookieExpires   = cookie.expires   != undefined ? cookie.expires : undefined;
 
                     var isValidHost = false;
 
@@ -202,8 +202,8 @@ var request = (function() {
                 // Set
                 case 2:
                 case 1:
-                    var cookies =  arguments[0] || null;
-                    var convert =  arguments[1] || true;
+                    var cookies = arguments[0] != undefined ? arguments[0] : null;
+                    var convert = arguments[1] != undefined ? arguments[1] : true;
 
                     if ( convert ){
                         cookies = toResCookie( cookies );
@@ -353,10 +353,10 @@ var request = (function() {
     function _request(method, siteurl, callback, opts){
         // Default
         opts            = opts          || {};
-        opts.data       = opts.data     || null;
-        opts.headers    = opts.headers  || null;
-        opts.cookies    = opts.cookies  || null;
-        opts.charset    = opts.charset  || null;
+        opts.data       = opts.data     != undefined ? opts.data    : null;
+        opts.headers    = opts.headers  != undefined ? opts.headers : null;
+        opts.cookies    = opts.cookies  != undefined ? opts.cookies : null;
+        opts.charset    = opts.charset  != undefined ? opts.charset : null;
 
         var queryData = querystring.stringify( opts.data );
         var parsedUrl = url.parse( siteurl );
