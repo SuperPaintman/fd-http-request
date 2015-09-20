@@ -8,7 +8,7 @@ objectMerge     = require 'object-merge'
 cookieParser    = require 'cookie'
 overlord        = require 'overlord-js'
 
-request = ()=>
+request = do ->
     # Класс запроса
     ###*
      * Класс для работы с запросами
@@ -330,9 +330,10 @@ request = ()=>
             cookies = []
             parsedCookies = []
 
-            for val, key in res.headers['set-cookie']
-                cookie = cookieParser.parse val
-                cookies.push cookie
+            if res?.headers['set-cookie']?
+                for val, key in res.headers['set-cookie']
+                    cookie = cookieParser.parse val
+                    cookies.push cookie
 
             ###*
              * Перевод в формат запроса
