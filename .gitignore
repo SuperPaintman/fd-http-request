@@ -1,0 +1,5 @@
+node_modules/
+_backup/
+_tmp/
+run.bat
+_gulp.bat

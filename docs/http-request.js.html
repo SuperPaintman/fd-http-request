@@ -1,4 +1,31 @@
-var cookieParser, http, https, iconv, objectMerge, overlord, querystring, request, url;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: http-request.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: http-request.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var cookieParser, http, https, iconv, objectMerge, overlord, querystring, request, url;
 
 http = require('http');
 
@@ -57,13 +84,13 @@ request = (function(_this) {
             opts.headers = self.headers;
           }
         }
-        if (self.saveCookies && self.cookies) {
+        if (self.saveCookies &amp;&amp; self.cookies) {
           parsedUrl = url.parse(siteurl);
           host = parsedUrl.host;
           path = parsedUrl.pathname;
           reqCookies = {};
           ref = self.cookies;
-          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+          for (i = j = 0, len = ref.length; j &lt; len; i = ++j) {
             cookie = ref[i];
             cookieHost = (ref1 = cookie.domain) != null ? ref1 : void 0;
             cookiePath = (ref2 = cookie.path) != null ? ref2 : void 0;
@@ -73,7 +100,7 @@ request = (function(_this) {
               reg = /^(?:.*?\/\/)?(?:www)?(?:\.)?(.*?)$/;
               siteMatches = host.match(reg);
               cookMatches = cookieHost.match(reg);
-              if (siteMatches && cookMatches && siteMatches[1] === cookMatches[1]) {
+              if (siteMatches &amp;&amp; cookMatches &amp;&amp; siteMatches[1] === cookMatches[1]) {
                 isValidHost = true;
               }
             }
@@ -87,7 +114,7 @@ request = (function(_this) {
             if (!cookieHost || isValidHost) {
               reg = new RegExp("^" + cookiePath, 'i');
               matches = path.match(reg);
-              if (!cookiePath || matches && matches[0]) {
+              if (!cookiePath || matches &amp;&amp; matches[0]) {
                 if (!cookieExpiresTimestamp || cookieExpiresTimestamp > new Date().getTime()) {
                   reqCookies[key] = val;
                 }
@@ -250,7 +277,7 @@ request = (function(_this) {
     toResCookie = function(cookies) {
       var j, key, len, obj, resCookies, val;
       resCookies = [];
-      for (key = j = 0, len = cookies.length; j < len; key = ++j) {
+      for (key = j = 0, len = cookies.length; j &lt; len; key = ++j) {
         val = cookies[key];
         obj = {};
         obj[key] = val;
@@ -260,7 +287,7 @@ request = (function(_this) {
     };
     removeResCookie = function(cookies, name) {
       var cookie, i, j, key, len;
-      for (i = j = 0, len = cookies.length; j < len; i = ++j) {
+      for (i = j = 0, len = cookies.length; j &lt; len; i = ++j) {
         cookie = cookies[i];
         key = Object.keys(cookie)[0];
         if (key === name) {
@@ -273,15 +300,15 @@ request = (function(_this) {
     mergeResCookie = function() {
       var cook, cookie, found, i, j, k, key, l, len, len1, len2, resCookie, resCookies, resI, resKey, resVal, val, x;
       resCookies = [];
-      for (i = j = 0, len = arguments.length; j < len; i = ++j) {
+      for (i = j = 0, len = arguments.length; j &lt; len; i = ++j) {
         cookie = arguments[i];
         if (cookie instanceof Object) {
-          for (x = k = 0, len1 = cookie.length; k < len1; x = ++k) {
+          for (x = k = 0, len1 = cookie.length; k &lt; len1; x = ++k) {
             cook = cookie[x];
             key = Object.keys(cook)[0];
             val = cook[key];
             found = false;
-            for (resI = l = 0, len2 = resCookies.length; l < len2; resI = ++l) {
+            for (resI = l = 0, len2 = resCookies.length; l &lt; len2; resI = ++l) {
               resCookie = resCookies[resI];
               resKey = Object.keys(resCookie)[0];
               resVal = resCookie[resKey];
@@ -334,7 +361,7 @@ request = (function(_this) {
         cookies = '';
         step = 0;
         ref = opts.cookies;
-        for (key = j = 0, len = ref.length; j < len; key = ++j) {
+        for (key = j = 0, len = ref.length; j &lt; len; key = ++j) {
           val = ref[key];
           if (step > 0) {
             cookies += '; ';
@@ -348,7 +375,7 @@ request = (function(_this) {
           }
         });
       }
-      if ((parsedUrl.protocol === 'https:' && !opts.protocol) || opts.protocol === 'https') {
+      if ((parsedUrl.protocol === 'https:' &amp;&amp; !opts.protocol) || opts.protocol === 'https') {
         options.port = 443;
         _http = https;
       } else {
@@ -363,7 +390,7 @@ request = (function(_this) {
         cookies = [];
         parsedCookies = [];
         ref1 = res.headers['set-cookie'];
-        for (key = k = 0, len1 = ref1.length; k < len1; key = ++k) {
+        for (key = k = 0, len1 = ref1.length; k &lt; len1; key = ++k) {
           val = ref1[key];
           cookie = cookieParser.parse(val);
           cookies.push(cookie);
@@ -382,7 +409,7 @@ request = (function(_this) {
           var charset, contentType, mathes, reg;
           charset = opts.charset;
           contentType = headers['content-type'];
-          if (contentType && !charset) {
+          if (contentType &amp;&amp; !charset) {
             reg = /charset=([a-zA-Z0-9\-]+)(?:;|$|\ )/;
             mathes = contentType.match(reg);
             if (mathes) {
@@ -449,3 +476,26 @@ request = (function(_this) {
 })(this);
 
 module.exports = request;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Request.html">Request</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sun Sep 20 2015 06:49:37 GMT+0500 (Западная Азия (зима))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
